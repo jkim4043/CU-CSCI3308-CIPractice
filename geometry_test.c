@@ -54,6 +54,116 @@ START_TEST(test_2d_eq)
 }
 END_TEST
 
+/*Area of triangle test*/
+START_TEST(test_2d_area_triangle)
+{
+    coord_2d_t a;
+    coord_2d_t b;
+    coord_2d_t c;
+
+    a.x = b.x = c.x = 0.0;
+    a.y = b.y = c.y = 0.0;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 0.0);
+
+    a.x = 0.0;
+    a.y = 0.0;
+    b.x = 0.0;
+    b.y = 10;
+    c.x = 10;
+    c.y = 0.0;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 50);
+
+    a.x = 0.0;
+    a.y = 10;
+    b.x = 10;
+    b.y = 0.0;
+    c.x = 0.0;
+    c.y = 0.0;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 50);
+    
+    a.x = 1;
+    a.y = 11;
+    b.x = 11;
+    b.y = 1;
+    c.x = 1;
+    c.y = 1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 50);
+    
+    a.x = -1;
+    a.y = 11;
+    b.x = -11;
+    b.y = 1;
+    c.x = -1;
+    c.y = 1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 50);
+    
+    a.x = -1;
+    a.y = -11;
+    b.x = -11;
+    b.y = -1;
+    c.x = -1;
+    c.y = -1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 50);
+    
+    a.x = 1;
+    a.y = -11;
+    b.x = 11;
+    b.y = -1;
+    c.x = 1;
+    c.y = -1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 50);
+    
+    a.x = -1;
+    a.y = -1;
+    b.x = -1;
+    b.y = 1;
+    c.x = 1;
+    c.y = 1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 2);
+    
+    a.x = -1;
+    a.y = 1;
+    b.x = 1;
+    b.y = 1;
+    c.x = 1;
+    c.y = -1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 2);
+    
+    a.x = 1;
+    a.y = 1;
+    b.x = -1;
+    b.y = -1;
+    c.x = 1;
+    c.y = -1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 2);
+    
+    a.x = -1;
+    a.y = 1;
+    b.x = -1;
+    b.y = -1;
+    c.x = 1;
+    c.y = -1;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 2);
+    
+    a.x = 3;
+    a.y = 3;
+    b.x = 8;
+    b.y = 18;
+    c.x = 19;
+    c.y = 9;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 105.0);
+    
+    a.x = -12;
+    a.y = 7;
+    b.x = 8;
+    b.y = 18;
+    c.x = 0;
+    c.y = 0;
+    ck_assert(coord_2d_area_triangle(&a, &b, &c) == 136.0);
+    
+}
+END_TEST
+
 /* coord_2d_dist Test */
 START_TEST(test_2d_dist)
 {
@@ -155,6 +265,9 @@ Suite* coord_2d_suite(void)
     /* Setup Test Cases */
     TCase* tc_2d_eq = tcase_create("coord_2d_eq");
     tcase_add_test(tc_2d_eq, test_2d_eq);
+    
+    TCase* tc_2d_area_triangle = tcase_create("coord_2d_area_triangle");
+    tcase_add_test(tc_2d_area_triangle, test_2d_area_triangle);
 
     TCase* tc_2d_dist = tcase_create("coord_2d_dist");
     tcase_add_test(tc_2d_dist, test_2d_dist);
@@ -166,7 +279,8 @@ Suite* coord_2d_suite(void)
     suite_add_tcase(s, tc_2d_eq);
     suite_add_tcase(s, tc_2d_dist);
     suite_add_tcase(s, tc_2d_midpoint);
-
+	suite_add_tcase(s, tc_2d_area_triangle);
+	
     /* Return Suite */
     return s;
 
